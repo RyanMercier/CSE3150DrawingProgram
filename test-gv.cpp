@@ -7,7 +7,15 @@
 // Test graphical view code
 int real_main(int argc, char **argv)
 {
-    Application app = Application();
+    if (argc > 1)
+    {
+        Application app = Application(argv[1]);
+    }
+
+    else
+    {
+        Application app = Application("tmp.dat");
+    }
 
     return 0;
 }
@@ -15,6 +23,5 @@ int real_main(int argc, char **argv)
 int main(int argc, char **argv)
 {
     return real_main(argc, argv);
-    //return al_run_main(argc, argv, real_main);
 }
 

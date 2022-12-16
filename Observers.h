@@ -3,23 +3,31 @@
 
 #include "ECObserver.h"
 #include "ECGraphicViewImp.h"
+#include "Application.h"
 #include "GraphicDocument.h"
 #include "GraphicController.h"
 #include <iostream>
 
-class TimerObserver : public ECObserver
+class AppObserver : public ECObserver
 {
 public:
-	TimerObserver(ECGraphicViewImp* p_view, GraphicController* p_controller, GraphicDocument *p_doc)
+	AppObserver(ECGraphicViewImp* p_view, GraphicController* p_controller, GraphicDocument *p_doc, std::string p_filename)
 	{
 		view = p_view;
 		controller = p_controller;
 		doc = p_doc;
+		filename = p_filename;
 		std::cout << "Timer Created" << std::endl;
 	}
 
 	virtual void Update()
 	{
+		if (view->GetCurrEvent() == ECGVEventType::ECGV_EV_KEY_UP_ESCAPE)
+		{
+			doc->SaveFile(filename);
+			std::cout << "File Saved" << std::endl;
+		}
+		
 		if (view->GetCurrEvent() == ECGVEventType::ECGV_EV_TIMER)
 		{
 			doc->Draw();
@@ -31,6 +39,7 @@ private:
 	ECGraphicViewImp* view = nullptr;
 	GraphicController* controller = nullptr;
 	GraphicDocument* doc = nullptr;
+	std::string filename;
 };
 
 class LeftMouseObserver : public ECObserver

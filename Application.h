@@ -1,6 +1,7 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include <string>
 #include "ECGraphicViewImp.h"
 #include "GraphicController.h"
 #include "GraphicDocument.h"
@@ -9,15 +10,19 @@
 class Application
 {
 public:
-	Application() { Initialize(); }
+	Application(std::string p_filename) { Initialize(p_filename); }
 	~Application() {}
 
 
-	void Initialize()
+	void Initialize(std::string p_filename)
 	{
+		// setup save file system
+        filename = p_filename;
+        doc.LoadFile(filename);
+		
 		// initialize timer observer
-		TimerObserver t_observer(&view, &controller, &doc);
-		view.Attach(&t_observer);
+		AppObserver a_observer(&view, &controller, &doc, filename);
+		view.Attach(&a_observer);
 
 		// initialize mouse observers
 		LeftMouseObserver lm_observer(&view, &controller);
@@ -31,6 +36,7 @@ public:
 	}
 	
 private:
+    std::string filename;
 	const int widthWin = 800, heightWin = 600;
 	ECGraphicViewImp view = ECGraphicViewImp(widthWin, heightWin);		// view
 	GraphicDocument doc = GraphicDocument(&view);						// model
