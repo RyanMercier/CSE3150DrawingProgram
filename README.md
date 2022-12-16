@@ -1,10 +1,13 @@
 # CSE3150DrawingProgram
 A drawing shape drawing program which uses Allegro5 and an interface by my professor Yufeng Wu which I created for a university project assignment
+Demo Video Included
+To run extract Run.7z open terminal navigate to the directory and type ./CSE3150Project2.exe <savefilename>
 
 Controls
   spacebar - switches mods between shape insertion and selection
   z - undo
   y - redo
+  esc - save file
 
   insert mode
     g - switch between ellipse and rectangle
